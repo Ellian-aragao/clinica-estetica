@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 
+import 'primereact/resources/primereact.min.css';
+import 'primeflex/primeflex.css';
+
 import { BreadCrumb } from 'primereact/breadcrumb';
 import { MenuItem } from 'primereact/api';
-// import { BreadCrumb } from 'primereact/breadcrumb';
-// import { MenuItem } from 'primereact/components/menuitem/MenuItem';
 import { TabMenu } from 'primereact/tabmenu';
 
 import logo from '../../assets/images/logo.svg';
@@ -13,7 +14,7 @@ const PageHeader: React.FC<HeaderInterface> = (props) => {
   const [activeItem, setActiveItem] = useState(props.itemAtivo);
   const tabs: MenuItem[] = [
     { label: 'home', url: '/', icon: 'pi pi-fw pi-home' },
-    { label: 'serviços', url: '/servicos' },
+    { label: 'serviços', url: '/servicos', icon: 'pi pi-fw pi-list' },
     { label: 'horário', url: '/horarios', icon: 'pi pi-fw pi-calendar' },
   ];
   const breadcrumb: MenuItem[] = [{ label: activeItem }];
