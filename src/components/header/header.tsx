@@ -1,8 +1,5 @@
 import React, { useState } from 'react';
 
-import 'primereact/resources/primereact.min.css';
-import 'primeflex/primeflex.css';
-
 import { BreadCrumb } from 'primereact/breadcrumb';
 import { MenuItem } from 'primereact/api';
 import { TabMenu } from 'primereact/tabmenu';
@@ -20,16 +17,18 @@ const PageHeader: React.FC<HeaderInterface> = (props) => {
   const breadcrumb: MenuItem[] = [{ label: activeItem }];
 
   return (
-    <header>
-      <a href='/'>
+    <header className='p-grid p-dir-col'>
+      <a className='p-col p-justify-center' href='/'>
         <img src={logo} alt='Logo' />
       </a>
-      <TabMenu
-        model={tabs}
-        activeItem={activeItem}
-        onTabChange={(e) => setActiveItem(e.value)}
-      />
-      <BreadCrumb model={breadcrumb} home={tabs[0]} />
+      <div className='p-col'>
+        <TabMenu
+          model={tabs}
+          activeItem={activeItem}
+          onTabChange={(e) => setActiveItem(e.value)}
+        />
+      </div>
+      <BreadCrumb className='p-col' model={breadcrumb} home={tabs[0]} />
     </header>
   );
 };
