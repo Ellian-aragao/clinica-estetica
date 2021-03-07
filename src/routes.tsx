@@ -1,17 +1,17 @@
 import React from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
-import home from './pages/home/home';
-import horarios from './pages/horarios/horarios';
-import login from './pages/login/login';
-import servicos from './pages/servicos/servicos';
+import pageHome from './pages/home/home';
+import pageHorarios from './pages/horarios/horarios';
+import pageLogin from './pages/login/login';
+import pageServicos from './pages/servicos/servicos';
 
 const Routes = () => (
   <Router>
-    <Route path='/' exact component={home} />
-    <Route path='/login' exact component={login} />
-    <Route path='/servicos' exact component={servicos} />
-    <Route path='/horarios' exact component={horarios} />
+    <Route path='/' exact component={pageHome} />
+    <Route path='/login' exact component={pageLogin} />
+    <Route path='/servicos' exact component={pageServicos} />
+    <Route path='/horarios' exact component={pageHorarios} />
   </Router>
 );
 

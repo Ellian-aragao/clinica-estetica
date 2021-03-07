@@ -1,6 +1,6 @@
 export default interface HorarioInterface {
   id: number;
-  data: Date;
+  data: number | string;
   inicial: string;
   final: string;
 }
