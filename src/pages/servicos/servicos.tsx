@@ -1,9 +1,11 @@
 import React from 'react';
+import TableService from '../../components/table/tableService';
 import BasePage from '../basePage';
 
 const servicos = () => (
   <BasePage itemAtivo='servicos'>
-    <span>Servicos</span>
+    <h1>Servicos</h1>
+    <TableService></TableService>
   </BasePage>
 );
 

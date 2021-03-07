@@ -9,7 +9,7 @@ const BasePage: React.FC<HeaderInterface> = (props) => (
       <header className='p-col'>
         <PageHeader itemAtivo={props.itemAtivo}></PageHeader>
       </header>
-      <main className='p-col'>{props.children}</main>
+      <main className='p-col p-card'>{props.children}</main>
     </div>
   </div>
 );
