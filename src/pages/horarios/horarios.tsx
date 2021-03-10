@@ -9,11 +9,7 @@ import { addLocale } from 'primereact/api';
 import CalendarService from '../../services/calendar.service';
 import HorarioInterface from '../../interfaces/Horario.interface';
 import BasePage from '../basePage';
-
-interface column {
-  field: any;
-  header: string;
-}
+import column from '../../interfaces/Column.interface';
 
 const PageHorarios = () => {
   const interfaceDates: HorarioInterface[] = [];
