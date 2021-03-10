@@ -2,25 +2,28 @@ import React, { useEffect, useState } from 'react';
 
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
-import CalendarService from '../../services/calendar.service';
-import HorarioInterface from '../../interfaces/Horario.interface';
-
+import { Button } from 'primereact/button';
 import BasePage from '../basePage';
-import { Calendar as CalendarComponent } from 'primereact/calendar';
+import { Calendar } from 'primereact/calendar';
 import { addLocale } from 'primereact/api';
+import HorarioInterface from '../../interfaces/Horario.interface';
+import CalendarService from '../../services/calendar.service';
 
 interface column {
   field: any;
   header: string;
 }
 
-const pageHorarios = () => (
-  <BasePage itemAtivo='horarios'>
-    <h1>Horários</h1>
-    <Calendar />
-    <TableCalendar />
-  </BasePage>
-);
+const pageHorarios = () => {
+  let service = new CalendarService();
+  return (
+    <BasePage itemAtivo='horarios'>
+      <h1>Horários</h1>
+      <FormCalendar service={service} />
+      <TableCalendar service={service} />
+    </BasePage>
+  );
+};
 
 const ptBrLocale = {
   dayNames: [
@@ -66,36 +69,82 @@ const ptBrLocale = {
   clear: 'Limpar',
 };
 
-const Calendar: React.FC = () => {
+const FormCalendar: React.FC<{ service: CalendarService }> = (prop) => {
   const today = new Date();
   const [date, setDate] = useState(today);
-
-  const log = (dateChanged: any) => {
-    setDate(dateChanged);
-  };
+  const [hourStart, setHourStart] = useState(today);
+  const [hourEnd, setHourEnd] = useState(today);
 
   addLocale('pt', ptBrLocale);
 
+  const funcMapper = (func: (item: any) => void, value: any) => {
+    console.log(value);
+    func(value);
+  };
+
+  const handleClick = () => {
+    if (!date || !hourStart || !hourEnd) {
+      return console.error('set values in form');
+    }
+    prop.service
+      .addHorario({
+        data: date.getTime(),
+        inicial: `${hourStart.getHours()}:${hourStart.getSeconds()}`,
+        final: `${hourEnd.getHours()}:${hourEnd.getSeconds()}`,
+      })
+      .then((horario) => console.log(horario));
+  };
+
   return (
-    <CalendarComponent
-      className='p-col-12'
-      onChange={(e) => log(e.value)}
-      minDate={today}
-      value={date}
-      dateFormat='dd/mm/yy'
-      locale='pt'
-      showButtonBar
-      showIcon
-    />
+    <div className='p-d-flex'>
+      <Calendar
+        className='p-lg-4'
+        minDate={today}
+        value={date}
+        dateFormat='dd/mm/yy'
+        locale='pt'
+        showButtonBar
+        onChange={(e) => funcMapper(setDate, e.value)}
+      />
+      <div className='p-d-flex p-jc-between'>
+        <Calendar
+          className='p-lg-3'
+          icon='pi pi-clock'
+          showButtonBar
+          showTime
+          timeOnly
+          value={hourStart}
+          onChange={(e) => funcMapper(setHourStart, e.value)}
+        />
+        <div className='p-d-flex'>
+          <Calendar
+            className='p-lg-5'
+            icon='pi pi-clock'
+            showButtonBar
+            showTime
+            timeOnly
+            value={hourEnd}
+            onChange={(e) => funcMapper(setHourEnd, e.value)}
+          />
+          <Button
+            className='p-lg-1 p-button-rounded'
+            tooltip='Adicionar'
+            icon='pi pi-plus'
+            style={{ marginTop: '6px' }}
+            onClick={handleClick}
+          />
+        </div>
+      </div>
+    </div>
   );
 };
 
-const TableCalendar: React.FC = () => {
+const TableCalendar: React.FC<{ service: CalendarService }> = (prop) => {
   const listDates: HorarioInterface[] = [];
   const [horarios, setHorarios] = useState(listDates);
 
   const columns: column[] = [
-    { field: 'data', header: 'dia' },
+    { field: 'data', header: 'Data' },
     { field: 'inicial', header: 'Hora inicial' },
     { field: 'final', header: 'Hora final' },
   ];
@@ -109,17 +158,18 @@ const TableCalendar: React.FC = () => {
     });
 
   useEffect(() => {
-    let service = new CalendarService();
-    service.getHorarios().then((horarios) => {
+    prop.service.getHorarios().then((horarios) => {
       setHorarios(mapToHorariosInterface(horarios));
     });
   }, []);
 
-  const dynamicColumns = columns.map((col) => {
-    return <Column key={col.field} field={col.field} header={col.header} />;
-  });
-
-  return <DataTable value={horarios}>{dynamicColumns}</DataTable>;
+  return (
+    <DataTable value={horarios}>
+      {columns.map((col) => (
+        <Column key={col.field} field={col.field} header={col.header} />
+      ))}
+    </DataTable>
+  );
 };
 
 export default pageHorarios;

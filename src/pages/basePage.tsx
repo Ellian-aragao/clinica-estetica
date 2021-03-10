@@ -4,12 +4,14 @@ import PageHeader from '../components/header/header';
 import HeaderInterface from '../interfaces/Header';
 
 const BasePage: React.FC<HeaderInterface> = (props) => (
-  <div className='p-grid p-justify-center'>
-    <div className='p-dir-col'>
-      <header className='p-col'>
+  <div className='p-d-flex p-flex-row p-jc-center'>
+    <div className='p-lg-8'>
+      <header className='p-lg-12'>
         <PageHeader itemAtivo={props.itemAtivo}></PageHeader>
       </header>
-      <main className='p-col p-card'>{props.children}</main>
+      <main className='p-lg-12 p-card' style={{ marginTop: '1rem' }}>
+        {props.children}
+      </main>
     </div>
   </div>
 );

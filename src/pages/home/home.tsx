@@ -3,7 +3,7 @@ import BasePage from '../basePage';
 
 const home = () => (
   <BasePage itemAtivo='home'>
-    <span>Home</span>
+    <h1>Home</h1>
   </BasePage>
 );
 

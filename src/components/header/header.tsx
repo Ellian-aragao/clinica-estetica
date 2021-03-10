@@ -17,18 +17,17 @@ const PageHeader: React.FC<HeaderInterface> = (props) => {
   const breadcrumb: MenuItem[] = [{ label: activeItem }];
 
   return (
-    <header className='p-grid p-dir-col'>
-      <a className='p-col p-justify-center' href='/'>
+    <header className='p-jc-center'>
+      <a className='p-lg-12' style={{ alignSelf: 'center' }} href='/'>
         <img src={logo} alt='Logo' />
       </a>
-      <div className='p-col'>
-        <TabMenu
-          model={tabs}
-          activeItem={activeItem}
-          onTabChange={(e) => setActiveItem(e.value)}
-        />
-      </div>
-      <BreadCrumb className='p-col' model={breadcrumb} home={tabs[0]} />
+      <TabMenu
+        className='p-lg-12'
+        model={tabs}
+        activeItem={activeItem}
+        onTabChange={(e) => setActiveItem(e.value)}
+      />
+      {/* <BreadCrumb className='p-col' model={breadcrumb} home={tabs[0]} /> */}
     </header>
   );
 };

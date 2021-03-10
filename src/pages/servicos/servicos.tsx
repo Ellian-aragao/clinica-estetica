@@ -9,7 +9,7 @@ import ServicoInterface from '../../interfaces/Servico.interface';
 import BasePage from '../basePage';
 
 const servicos = () => (
-  <BasePage itemAtivo='servicos'>
+  <BasePage itemAtivo='serviços'>
     <h1>Servicos</h1>
     <TableService></TableService>
   </BasePage>
