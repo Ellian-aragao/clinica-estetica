@@ -3,24 +3,33 @@ import React, { useEffect, useState } from 'react';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { Button } from 'primereact/button';
-import BasePage from '../basePage';
 import { Calendar } from 'primereact/calendar';
 import { addLocale } from 'primereact/api';
-import HorarioInterface from '../../interfaces/Horario.interface';
+
 import CalendarService from '../../services/calendar.service';
+import HorarioInterface from '../../interfaces/Horario.interface';
+import BasePage from '../basePage';
 
 interface column {
   field: any;
   header: string;
 }
 
-const pageHorarios = () => {
-  let service = new CalendarService();
+const PageHorarios = () => {
+  const interfaceDates: HorarioInterface[] = [];
+  const [dates, setDates] = useState(interfaceDates);
+  const updateTable = (horario: HorarioInterface) =>
+    setDates([...dates, horario]);
+
+  useEffect(() => {
+    CalendarService.getHorarios().then((horarios) => setDates(horarios));
+  }, []);
+
   return (
     <BasePage itemAtivo='horarios'>
       <h1>Horários</h1>
-      <FormCalendar service={service} />
-      <TableCalendar service={service} />
+      <FormCalendar onSubmit={updateTable} />
+      <TableCalendar listDates={dates} />
     </BasePage>
   );
 };
@@ -69,32 +78,28 @@ const ptBrLocale = {
   clear: 'Limpar',
 };
 
-const FormCalendar: React.FC<{ service: CalendarService }> = (prop) => {
+const FormCalendar: React.FC<{
+  onSubmit: (event: HorarioInterface) => void;
+}> = (prop) => {
   const today = new Date();
   const [date, setDate] = useState(today);
   const [hourStart, setHourStart] = useState(today);
   const [hourEnd, setHourEnd] = useState(today);
 
-  addLocale('pt', ptBrLocale);
+  const funcMapper = (func: (item: any) => void, value: any) => func(value);
 
-  const funcMapper = (func: (item: any) => void, value: any) => {
-    console.log(value);
-    func(value);
-  };
-
-  const handleClick = () => {
+  const handleClickButton = () => {
     if (!date || !hourStart || !hourEnd) {
       return console.error('set values in form');
     }
-    prop.service
-      .addHorario({
-        data: date.getTime(),
-        inicial: `${hourStart.getHours()}:${hourStart.getSeconds()}`,
-        final: `${hourEnd.getHours()}:${hourEnd.getSeconds()}`,
-      })
-      .then((horario) => console.log(horario));
+    CalendarService.addHorario({
+      data: date.getTime(),
+      inicial: `${hourStart.getHours()}:${hourStart.getSeconds()}`,
+      final: `${hourEnd.getHours()}:${hourEnd.getSeconds()}`,
+    }).then((horario) => prop.onSubmit(horario));
   };
 
+  addLocale('pt', ptBrLocale);
   return (
     <div className='p-d-flex'>
       <Calendar
@@ -131,7 +136,7 @@ const FormCalendar: React.FC<{ service: CalendarService }> = (prop) => {
             tooltip='Adicionar'
             icon='pi pi-plus'
             style={{ marginTop: '6px' }}
-            onClick={handleClick}
+            onClick={handleClickButton}
           />
         </div>
       </div>
@@ -139,29 +144,17 @@ const FormCalendar: React.FC<{ service: CalendarService }> = (prop) => {
   );
 };
 
-const TableCalendar: React.FC<{ service: CalendarService }> = (prop) => {
-  const listDates: HorarioInterface[] = [];
-  const [horarios, setHorarios] = useState(listDates);
+const TableCalendar: React.FC<{ listDates: HorarioInterface[] }> = (prop) => {
+  const horarios = prop.listDates.map((horario) => {
+    horario.data = new Date(horario.data).toLocaleDateString();
+    return horario;
+  });
 
   const columns: column[] = [
     { field: 'data', header: 'Data' },
     { field: 'inicial', header: 'Hora inicial' },
     { field: 'final', header: 'Hora final' },
   ];
-
-  const mapToHorariosInterface = (
-    horarios: HorarioInterface[],
-  ): HorarioInterface[] =>
-    horarios.map((horario) => {
-      horario.data = new Date(horario.data).toLocaleDateString();
-      return horario;
-    });
-
-  useEffect(() => {
-    prop.service.getHorarios().then((horarios) => {
-      setHorarios(mapToHorariosInterface(horarios));
-    });
-  }, []);
 
   return (
     <DataTable value={horarios}>
@@ -172,4 +165,4 @@ const TableCalendar: React.FC<{ service: CalendarService }> = (prop) => {
   );
 };
 
-export default pageHorarios;
+export default PageHorarios;

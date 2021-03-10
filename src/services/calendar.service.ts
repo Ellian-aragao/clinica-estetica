@@ -9,13 +9,13 @@ export default class CalendarService {
     { id: 3, data: dateToday, inicial: '14:30', final: '15:30' },
   ];
 
-  getHorarios(): Promise<HorarioInterface[]> {
+  static getHorarios(): Promise<HorarioInterface[]> {
     return new Promise((resolve, reject) => {
       resolve(CalendarService.listHorarios);
     });
   }
 
-  addHorario(horario: HorarioInterface): Promise<HorarioInterface> {
+  static addHorario(horario: HorarioInterface): Promise<HorarioInterface> {
     CalendarService.listHorarios.push(horario);
     return new Promise((resolve, reject) => {
       resolve(CalendarService.listHorarios[CalendarService.listHorarios.length - 1]);

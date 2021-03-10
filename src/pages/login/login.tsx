@@ -1,10 +1,10 @@
 import React from 'react';
 import BasePage from '../basePage';
 
-const login = () => (
+const PageLogin = () => (
   <BasePage itemAtivo="login">
     <span>login</span>
   </BasePage>
 );
 
-export default login;
+export default PageLogin;

@@ -8,7 +8,7 @@ import ServicoInterface from '../../interfaces/Servico.interface';
 
 import BasePage from '../basePage';
 
-const servicos = () => (
+const PageServicos = () => (
   <BasePage itemAtivo='serviços'>
     <h1>Servicos</h1>
     <TableService></TableService>
@@ -43,4 +43,4 @@ const TableService: React.FC = () => {
 };
 
 
-export default servicos;
+export default PageServicos;
