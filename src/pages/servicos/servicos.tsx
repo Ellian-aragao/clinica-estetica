@@ -9,8 +9,9 @@ import ServicoInterface from '../../interfaces/Servico.interface';
 import column from '../../interfaces/Column.interface';
 
 import ServicoService from '../../services/servico.service';
-import BasePage from '../basePage';
+import BasePage from '../../components/basePage';
 import { Button } from 'primereact/button';
+import { RoutesEnum } from '../../routes.const';
 
 const PageServicos = () => {
   const interfaceServico: ServicoInterface[] = [];
@@ -24,7 +25,7 @@ const PageServicos = () => {
   }, []);
 
   return (
-    <BasePage itemAtivo='serviços'>
+    <BasePage itemAtivo={RoutesEnum.Serviço} >
       <h1>Serviços</h1>
       <FormServico onSubmit={updateTable} />
       <TableService listServicos={servicos} />

@@ -1,7 +1,7 @@
 import React from 'react';
 
-import PageHeader from '../components/header/header';
-import HeaderInterface from '../interfaces/Header';
+import PageHeader from './header';
+import HeaderInterface from '../interfaces/Header.interface';
 
 const BasePage: React.FC<HeaderInterface> = (props) => (
   <div className='p-d-flex p-flex-row p-jc-center'>

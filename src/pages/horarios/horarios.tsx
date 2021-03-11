@@ -8,8 +8,9 @@ import { addLocale } from 'primereact/api';
 
 import CalendarService from '../../services/calendar.service';
 import HorarioInterface from '../../interfaces/Horario.interface';
-import BasePage from '../basePage';
+import BasePage from '../../components/basePage';
 import column from '../../interfaces/Column.interface';
+import { RoutesEnum } from '../../routes.const';
 
 const PageHorarios = () => {
   const interfaceDates: HorarioInterface[] = [];
@@ -22,9 +23,10 @@ const PageHorarios = () => {
   }, []);
 
   return (
-    <BasePage itemAtivo='horarios'>
+    <BasePage itemAtivo={RoutesEnum.Horário} >
       <h1>Horários</h1>
       <FormCalendar onSubmit={updateTable} />
+      <br/>
       <TableCalendar listDates={dates} />
     </BasePage>
   );

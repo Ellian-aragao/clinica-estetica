@@ -1,8 +1,9 @@
 import React from 'react';
-import BasePage from '../basePage';
+import BasePage from '../../components/basePage';
+import { RoutesEnum } from '../../routes.const';
 
 const home = () => (
-  <BasePage itemAtivo='home'>
+  <BasePage itemAtivo={RoutesEnum.Home} >
     <h1>Home</h1>
   </BasePage>
 );
