@@ -1,6 +1,5 @@
 import HorarioInterface from '../interfaces/Horario.interface';
 
-
 const dateToday = Date.now();
 export default class CalendarService {
   private static listHorarios: HorarioInterface[] = [
@@ -10,15 +9,17 @@ export default class CalendarService {
   ];
 
   static getHorarios(): Promise<HorarioInterface[]> {
-    return new Promise((resolve, reject) => {
-      resolve(CalendarService.listHorarios);
-    });
+    return new Promise((resolve, reject) =>
+      resolve(CalendarService.listHorarios),
+    );
   }
 
   static addHorario(horario: HorarioInterface): Promise<HorarioInterface> {
     CalendarService.listHorarios.push(horario);
     return new Promise((resolve, reject) => {
-      resolve(CalendarService.listHorarios[CalendarService.listHorarios.length - 1]);
+      resolve(
+        CalendarService.listHorarios[CalendarService.listHorarios.length - 1],
+      );
     });
   }
 }

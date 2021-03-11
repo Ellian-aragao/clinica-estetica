@@ -30,8 +30,7 @@ const PageHorarios = () => {
     <BasePage itemAtivo={RoutesEnum.Horário}>
       <h1>Horários</h1>
       <FormCalendar onSubmit={updateTable} />
-      <br />
-      <Table list={dates} column={columns} />
+      <Table className="p-mt-2" list={dates} column={columns} />
     </BasePage>
   );
 };

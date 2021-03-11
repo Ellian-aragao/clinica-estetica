@@ -8,9 +8,7 @@ export default class ServicoService {
   ];
 
   static getServicos(): Promise<ServicoInterface[]> {
-    return new Promise((resolve, reject) => {
-      resolve(this.listServices);
-    });
+    return new Promise((resolve, reject) => resolve(this.listServices));
   }
 
   static addServico(servico: ServicoInterface): Promise<ServicoInterface> {

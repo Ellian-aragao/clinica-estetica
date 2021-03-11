@@ -56,7 +56,7 @@ const FormServico: React.FC<{
   };
 
   return (
-    <div className='p-d-flex p-flex-column'>
+    <div className='p-d-flex p-flex-column p-mb-3'>
       <h3>Título</h3>
       <InputText
         className='p-lg-4'
@@ -73,14 +73,12 @@ const FormServico: React.FC<{
         autoResize
         onChange={(e) => funcMapper(setDescription, e)}
       />
-      <br />
       <Button
-        className='p-lg-2 p-button-rounded'
+        className='p-mt-3 p-lg-2 p-button-rounded'
         label='Adicionar'
         icon='pi pi-plus'
         onClick={handleClickButton}
       />
-      <br />
     </div>
   );
 };
