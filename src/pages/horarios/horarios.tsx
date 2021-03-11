@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
 
-import { DataTable } from 'primereact/datatable';
-import { Column } from 'primereact/column';
 import { Button } from 'primereact/button';
 import { Calendar } from 'primereact/calendar';
 import { addLocale } from 'primereact/api';
@@ -9,12 +7,18 @@ import { addLocale } from 'primereact/api';
 import CalendarService from '../../services/calendar.service';
 import HorarioInterface from '../../interfaces/Horario.interface';
 import BasePage from '../../components/basePage';
+import Table from '../../components/Table';
 import column from '../../interfaces/Column.interface';
 import { RoutesEnum } from '../../routes.const';
 
 const PageHorarios = () => {
   const interfaceDates: HorarioInterface[] = [];
   const [dates, setDates] = useState(interfaceDates);
+  const columns: column[] = [
+    { field: 'data', header: 'Data' },
+    { field: 'inicial', header: 'Hora inicial' },
+    { field: 'final', header: 'Hora final' },
+  ];
   const updateTable = (horario: HorarioInterface) =>
     setDates([...dates, horario]);
 
@@ -23,11 +27,11 @@ const PageHorarios = () => {
   }, []);
 
   return (
-    <BasePage itemAtivo={RoutesEnum.Horário} >
+    <BasePage itemAtivo={RoutesEnum.Horário}>
       <h1>Horários</h1>
       <FormCalendar onSubmit={updateTable} />
-      <br/>
-      <TableCalendar listDates={dates} />
+      <br />
+      <Table list={dates} column={columns} />
     </BasePage>
   );
 };
@@ -139,27 +143,6 @@ const FormCalendar: React.FC<{
         </div>
       </div>
     </div>
-  );
-};
-
-const TableCalendar: React.FC<{ listDates: HorarioInterface[] }> = (prop) => {
-  const horarios = prop.listDates.map((horario) => {
-    horario.data = new Date(horario.data).toLocaleDateString();
-    return horario;
-  });
-
-  const columns: column[] = [
-    { field: 'data', header: 'Data' },
-    { field: 'inicial', header: 'Hora inicial' },
-    { field: 'final', header: 'Hora final' },
-  ];
-
-  return (
-    <DataTable value={horarios}>
-      {columns.map((col) => (
-        <Column key={col.field} field={col.field} header={col.header} />
-      ))}
-    </DataTable>
   );
 };
 

@@ -1,22 +1,24 @@
 import React, { useEffect, useState } from 'react';
 
-import { DataTable } from 'primereact/datatable';
-import { Column } from 'primereact/column';
 import { InputText } from 'primereact/inputtext';
 import { InputTextarea } from 'primereact/inputtextarea';
+import { Button } from 'primereact/button';
 
 import ServicoInterface from '../../interfaces/Servico.interface';
 import column from '../../interfaces/Column.interface';
 
 import ServicoService from '../../services/servico.service';
 import BasePage from '../../components/basePage';
-import { Button } from 'primereact/button';
+import Table from '../../components/Table';
 import { RoutesEnum } from '../../routes.const';
 
 const PageServicos = () => {
   const interfaceServico: ServicoInterface[] = [];
   const [servicos, setServicos] = useState(interfaceServico);
-
+  const columns: column[] = [
+    { field: 'nome', header: 'Nome' },
+    { field: 'descricao', header: 'Descrição' },
+  ];
   const updateTable = (servico: ServicoInterface) =>
     setServicos([...servicos, servico]);
 
@@ -28,7 +30,7 @@ const PageServicos = () => {
     <BasePage itemAtivo={RoutesEnum.Serviço} >
       <h1>Serviços</h1>
       <FormServico onSubmit={updateTable} />
-      <TableService listServicos={servicos} />
+      <Table list={servicos} column={columns} />
     </BasePage>
   );
 };
@@ -81,21 +83,6 @@ const FormServico: React.FC<{
       <br />
     </div>
   );
-};
-
-const TableService: React.FC<{ listServicos: ServicoInterface[] }> = (prop) => {
-  const products = prop.listServicos;
-
-  const columns: column[] = [
-    { field: 'nome', header: 'Nome' },
-    { field: 'descricao', header: 'Descrição' },
-  ];
-
-  const dynamicColumns = columns.map((col) => {
-    return <Column key={col.field} field={col.field} header={col.header} />;
-  });
-
-  return <DataTable value={products}>{dynamicColumns}</DataTable>;
 };
 
 export default PageServicos;

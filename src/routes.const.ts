@@ -29,14 +29,14 @@ export const RoutesInfo: menu[] = [
     label: 'Serviços',
     url: '/servicos',
     icon: 'pi pi-fw pi-list',
-    component: PageHorarios,
+    component: PageServicos,
   },
   {
     id: RoutesEnum.Horário,
     label: 'Horário',
     url: '/horarios',
     icon: 'pi pi-fw pi-calendar',
-    component: PageServicos,
+    component: PageHorarios,
   },
   {
     id: RoutesEnum.Login,
