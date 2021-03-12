@@ -6,9 +6,13 @@ interface TableInterface {
   list: any[];
   column: column[];
   className?: string;
+  rowClick: (row: any) => any;
 }
 const Table: React.FC<TableInterface> = (prop) => (
-  <DataTable className={prop.className} value={prop.list}>
+  <DataTable
+    className={prop.className}
+    value={prop.list}
+    onRowClick={(props) => prop.rowClick(props)}>
     {prop.column.map((col) => (
       <Column key={col.field} field={col.field} header={col.header} />
     ))}

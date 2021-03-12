@@ -13,31 +13,43 @@ import Table from '../../components/Table';
 import { RoutesEnum } from '../../routes.const';
 
 const PageServicos = () => {
-  const interfaceServico: ServicoInterface[] = [];
-  const [servicos, setServicos] = useState(interfaceServico);
+  const interfaceServico: ServicoInterface = { id: 0, nome: '', descricao: '' };
+  const [servicos, setServicos] = useState(Array.of(interfaceServico));
+
+  const handleRowTableClick = (e: { data: ServicoInterface }) => {
+    ServicoService.delServico(e.data.id ? e.data.id : -1).then((status) =>
+      setServicos(servicos.filter((s: ServicoInterface) => s.id !== e.data.id)),
+    );
+  };
+
   const columns: column[] = [
     { field: 'nome', header: 'Nome' },
     { field: 'descricao', header: 'Descrição' },
   ];
-  const updateTable = (servico: ServicoInterface) =>
-    setServicos([...servicos, servico]);
 
+  const updateTable = (servico: ServicoInterface) => {
+    setServicos([...servicos, servico]);
+    ServicoService.addServico(servico);
+  };
   useEffect(() => {
-    ServicoService.getServicos().then((servicos) => setServicos(servicos));
+    ServicoService.getServicos().then((servicos) => {
+      setServicos(servicos);
+    });
   }, []);
 
   return (
-    <BasePage itemAtivo={RoutesEnum.Serviço} >
+    <BasePage itemAtivo={RoutesEnum.Serviço}>
       <h1>Serviços</h1>
       <FormServico onSubmit={updateTable} />
-      <Table list={servicos} column={columns} />
+      <Table list={servicos} column={columns} rowClick={handleRowTableClick} />
     </BasePage>
   );
 };
 
-const FormServico: React.FC<{
+interface FormInterface {
   onSubmit: (event: ServicoInterface) => void;
-}> = (prop) => {
+}
+const FormServico: React.FC<FormInterface> = (prop) => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
 
@@ -45,7 +57,6 @@ const FormServico: React.FC<{
     func(value.target.value);
 
   const handleClickButton = () => {
-    console.log('clicked');
     if (!title || !description) {
       return console.error('set values in form');
     }

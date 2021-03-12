@@ -12,25 +12,48 @@ import column from '../../interfaces/Column.interface';
 import { RoutesEnum } from '../../routes.const';
 
 const PageHorarios = () => {
-  const interfaceDates: HorarioInterface[] = [];
+  const interfaceDates: any[] = [];
   const [dates, setDates] = useState(interfaceDates);
   const columns: column[] = [
     { field: 'data', header: 'Data' },
     { field: 'inicial', header: 'Hora inicial' },
     { field: 'final', header: 'Hora final' },
   ];
+
+  const dateToString = (h: HorarioInterface) => {
+    return {
+      id: h.id,
+      data: new Date(h.data).toLocaleDateString(),
+      inicial: h.inicial,
+      final: h.final,
+    };
+  };
+
+  const handleRowTableClick = (e: { data: HorarioInterface }) => {
+    CalendarService.delHorario(e.data.id ? e.data.id : -1).then(() =>
+      setDates(dates.filter((d: HorarioInterface) => d.id !== e.data.id)),
+    );
+  };
+
   const updateTable = (horario: HorarioInterface) =>
-    setDates([...dates, horario]);
+    setDates([...dates, dateToString(horario)]);
 
   useEffect(() => {
-    CalendarService.getHorarios().then((horarios) => setDates(horarios));
+    CalendarService.getHorarios().then((horarios) =>
+      setDates(horarios.map((h: HorarioInterface) => dateToString(h))),
+    );
   }, []);
 
   return (
     <BasePage itemAtivo={RoutesEnum.Horário}>
       <h1>Horários</h1>
       <FormCalendar onSubmit={updateTable} />
-      <Table className="p-mt-2" list={dates} column={columns} />
+      <Table
+        className='p-mt-2'
+        list={dates}
+        column={columns}
+        rowClick={handleRowTableClick}
+      />
     </BasePage>
   );
 };
@@ -82,7 +105,7 @@ const ptBrLocale = {
 const FormCalendar: React.FC<{
   onSubmit: (event: HorarioInterface) => void;
 }> = (prop) => {
-  const today = new Date();
+  const today: Date = new Date();
   const [date, setDate] = useState(today);
   const [hourStart, setHourStart] = useState(today);
   const [hourEnd, setHourEnd] = useState(today);
