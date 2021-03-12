@@ -1,11 +1,15 @@
 import ServicoInterface from '../interfaces/Servico.interface';
 
 export default class ServicoService {
-  private static idConter = 3;
+  private static idConter = 8;
   private static listServices: ServicoInterface[] = [
-    { id: 1, nome: 'teste1', descricao: 'loreipsum' },
-    { id: 2, nome: 'teste2', descricao: 'loreipsum' },
-    { id: 3, nome: 'teste3', descricao: 'loreipsum' },
+    { id: 1, nome: 'Estética Facial', descricao: 'loreipsum' },
+    { id: 2, nome: 'Micropigmentação', descricao: 'loreipsum' },
+    { id: 3, nome: 'Edermoterapia', descricao: 'loreipsum' },
+    { id: 4, nome: 'Hidratação facial', descricao: 'loreipsum' },
+    { id: 5, nome: 'Limpeza de pele', descricao: 'loreipsum' },
+    { id: 6, nome: 'Revitalização de pele', descricao: 'loreipsum' },
+    { id: 7, nome: 'Jato de plasma', descricao: 'loreipsum' },
   ];
 
   static getServicos(): Promise<ServicoInterface[]> {

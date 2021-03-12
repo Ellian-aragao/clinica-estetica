@@ -16,8 +16,8 @@ const PageHorarios = () => {
   const [dates, setDates] = useState(interfaceDates);
   const columns: column[] = [
     { field: 'data', header: 'Data' },
-    { field: 'inicial', header: 'Hora inicial' },
-    { field: 'final', header: 'Hora final' },
+    { field: 'inicial', header: 'Início' },
+    { field: 'final', header: 'Término' },
   ];
 
   const dateToString = (h: HorarioInterface) => {
@@ -156,10 +156,10 @@ const FormCalendar: React.FC<{
             onChange={(e) => funcMapper(setHourEnd, e.value)}
           />
           <Button
-            className='p-lg-1 p-button-rounded'
+            className='p-mr-1 p-button-rounded'
             tooltip='Adicionar'
             icon='pi pi-plus'
-            style={{ marginTop: '6px' }}
+            style={{ marginTop: '8px' }}
             onClick={handleClickButton}
           />
         </div>

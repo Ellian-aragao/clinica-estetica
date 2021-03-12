@@ -14,11 +14,11 @@ const PageHeader: React.FC<HeaderInterface> = (props) => {
 
   return (
     <header className='p-d-flex p-flex-column p-jc-center'>
-      <a style={{ margin: 'auto'}} className='p-lg-12' href='/'>
+      <a style={{ margin: 'auto'}} className='p-mr-12' href='/'>
         <img src={logo} alt='Logo' />
       </a>
       <TabMenu
-        className='p-lg-12'
+        className='p-mr-12'
         model={tabs}
         activeItem={tabs
           .filter((tab) => tab.id === activeItem)
