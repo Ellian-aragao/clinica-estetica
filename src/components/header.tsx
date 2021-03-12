@@ -13,8 +13,8 @@ const PageHeader: React.FC<HeaderInterface> = (props) => {
   );
 
   return (
-    <header className='p-jc-center'>
-      <a className='p-lg-12' style={{ alignSelf: 'center' }} href='/'>
+    <header className='p-d-flex p-flex-column p-jc-center'>
+      <a style={{ margin: 'auto'}} className='p-lg-12' href='/'>
         <img src={logo} alt='Logo' />
       </a>
       <TabMenu
