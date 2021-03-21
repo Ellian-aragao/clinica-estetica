@@ -12,7 +12,7 @@ import BasePage from '../../components/basePage';
 import Table from '../../components/Table';
 import { RoutesEnum } from '../../routes.const';
 
-const PageServicos = () => {
+const PageServicos: React.FC = () => {
   const interfaceServico: ServicoInterface = { id: 0, nome: '', descricao: '' };
   const [servicos, setServicos] = useState(Array.of(interfaceServico));
 

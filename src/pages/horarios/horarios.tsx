@@ -11,7 +11,7 @@ import Table from '../../components/Table';
 import column from '../../interfaces/Column.interface';
 import { RoutesEnum } from '../../routes.const';
 
-const PageHorarios = () => {
+const PageHorarios: React.FC = () => {
   const interfaceDates: any[] = [];
   const [dates, setDates] = useState(interfaceDates);
   const columns: column[] = [

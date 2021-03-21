@@ -7,6 +7,6 @@ import 'primeflex/primeflex.css';
 
 import Routes from './routes';
 
-const App = () => <Routes />;
+const App: React.FC = () => <Routes />;
 
 export default App;
