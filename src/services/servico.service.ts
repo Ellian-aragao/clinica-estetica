@@ -30,13 +30,9 @@ export default class ServicoService {
   }
 
   static delServico(servicoId: number): Promise<number> {
-    const before = this.listServices.length;
     this.listServices = this.listServices.filter(
       (service) => service.id !== servicoId,
     );
-    if (before > this.listServices.length) {
-      console.log('Deletado com sucesso');
-    }
     return new Promise((resolve, reject) => resolve(200));
   }
 }

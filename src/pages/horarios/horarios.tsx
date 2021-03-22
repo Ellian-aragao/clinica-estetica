@@ -114,7 +114,7 @@ const FormCalendar: React.FC<{
 
   const handleClickButton = () => {
     if (!date || !hourStart || !hourEnd) {
-      return console.error('set values in form');
+      return alert('set values in form');
     }
     CalendarService.addHorario({
       data: date.getTime(),

@@ -58,7 +58,7 @@ const FormServico: React.FC<FormInterface> = (prop) => {
 
   const handleClickButton = () => {
     if (!title || !description) {
-      return console.error('set values in form');
+      return alert('set values in form');
     }
     ServicoService.addServico({
       nome: title,

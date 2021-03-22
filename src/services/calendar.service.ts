@@ -29,13 +29,9 @@ export default class CalendarService {
     });
   }
   static delHorario(horarioId: number): Promise<number> {
-    const before = this.listHorarios.length;
     this.listHorarios = this.listHorarios.filter(
       (horario) => horario.id !== horarioId,
     );
-    if (before > this.listHorarios.length) {
-      console.log('Deletado com sucesso');
-    }
     return new Promise((resolve, reject) => resolve(200));
   }
 }
