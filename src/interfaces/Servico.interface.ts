@@ -1,5 +1,5 @@
 export default interface ServicoInterface {
-  id: number;
-  name: string;
-  description: string;
+  id?: number;
+  nome: string;
+  descricao: string;
 }

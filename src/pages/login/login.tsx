@@ -1,10 +1,11 @@
 import React from 'react';
-import BasePage from '../basePage';
+import BasePage from '../../components/basePage';
+import { RoutesEnum } from '../../routes.const';
 
-const login = () => (
-  <BasePage itemAtivo="login">
+const PageLogin: React.FC = () => (
+  <BasePage itemAtivo={RoutesEnum.Login} >
     <span>login</span>
   </BasePage>
 );
 
-export default login;
+export default PageLogin;
